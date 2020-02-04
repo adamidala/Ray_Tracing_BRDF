@@ -14,7 +14,7 @@ def a(n_i,n_t,th_i):
 	
     return np.array(a_p), np.array(a_s)
 
-def Jonex_Matrix(th_i, th_r, phi):
+def Jones_Matrix(th_i, th_r, phi):
 	b = beta(th_i, th_r, phi)
 	et_i,et_r = eta(th_i,th_r,b)
 	a_p, a_s = a(n_i,n_t,th_i)
@@ -60,16 +60,16 @@ def theta(th_i,th_r,b):
 	co = (cos(th_i)+cos(th_r))/(2*cos(b))
 	return arccos(co)
     
-def f(th_i,th_r,phi):
+def f(th_i,th_r,phi): # /cos(th_r)
 	#f = np.ones((4,4),dtype=complex)
 	b = beta(th_i, th_r, phi)
 	th = theta(th_i,th_r,b)
 	f = exp(-(tan(th)**2)/(2*sigma**2))\
-	/(2*pi*4*(sigma**2)*(cos(th)**4)*cos(th_r)*cos(th_i))\
-	*Mueller(Jonex_Matrix(th_i, th_r, phi))
+	/(2*pi*4*(sigma**2)*(cos(th)**4)*cos(th_i))\
+	*Mueller(Jones_Matrix(th_i, th_r, phi))
 	return f
 
-N = 90
+N = 900
 th_r1d = np.linspace(0,np.pi/2,N) # 0 - 90 degrés
 phi1d = np.linspace(0,np.pi/2,N) # 0 - 90 degrés
 th_i = np.pi/3 # 60 degrés
@@ -80,7 +80,16 @@ n_t = 1.57
 n_i = 1
 F = f(th_i,th_r,phi)
 
-f00 = F[0,0]*cos(th_r)
-plt.contour(th_r,phi,f00) # x , y , z
-plt.xlabel("\thetar")
+f00 = F[0,0] # *cos(th_r)
+f02 = F[0,2] # *cos(th_r)
+
+plt.figure(figsize=(14,14))
+c = plt.contour(th_r,phi,f02) # x , y , z
+#plt.clabel(c)
+plt.xlabel(r"${\theta_r}$ (deg)",fontsize = 20)
+plt.ylabel(r"${\phi }$ (deg)",fontsize = 20)
+plt.title("f00")
+plt.xticks(np.arange(0,np.pi/2,np.pi/18),labels = np.arange(0,90,10) )
+plt.yticks(np.arange(0,np.pi/2,np.pi/18),labels = np.arange(0,90,10) )
+
 plt.show()
