@@ -4,7 +4,7 @@ import os
 from numpy import cos,arccos,sin,arcsin,tan,arctan,exp,pi,sqrt
 
 #______________   PAGE 6  ___________________
-
+# Sample : Pressed PTFE
 n = 1.45                            # +/-0.04
 rhol = 0.74                         # +/- 0.07
 gamma = 0.049                       # +/- 0.015
