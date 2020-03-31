@@ -64,17 +64,40 @@ from scipy.integrate import quad
 def rho(a):
     return exp( ( -( (tan(a)) **2) ) / (2*(sigma**2)) ) / (2*pi*(sigma**2) * (cos(a)**3))
 
+#  C = ? ____________________________________ page 4/13 équation (2)
 
 I = quad(rho, -pi/2, pi/2)
-C = 1/(I[0]-I[1])
-#  Ok pour C ? ____________________________________ page 4/13 équation (2)
+C = I[0]-I[1]
 
+def Integr2(func,a,b,thr,alpha):
+    I = quad(func, a, b, args=(thr,alpha))
+    return I[0]-I[1]
 
-def gm(thr,sigma):
-    return
-def gs(thr,sigma):
-    
-    return
+def Integr0(func,a,b):
+    I = quad(func, a, b)
+    return I[0]-I[1]
+
+def gm_func3(x,thr,a):
+    N = sin(a) * tan(thr) + cos(a) + cos(x) - sin(x)*tan(thr)
+    D = sin(a) * tan(thr) + cos(a)
+    return N/D
+
+def gs_func3(x,thr,a):
+    N = sin(a) * tan(thr) + cos(a) + cos(x) - sin(x)*tan(thr)
+    D = sin(a) * tan(thr) + cos(a)
+    return N/D
+
+def gm(th_r,alpha):
+    gm1 = Integr0(rho, -pi/2, pi/2 - th_r)
+    gm2 = 0
+    gm3 = Integr2(gm_func3, (pi/2) - th_r , (pi/2) - 2*th_r + alpha ,th_r,alpha)
+    return gm1 +gm2 + gm3
+
+def gs(th_i,alpha):
+    gs1 = Integr0(rho, 0, pi/2 - th_i)
+    gs2 = 0
+    gs3 = Integr2(gs_func3, (pi/2) - th_i , (pi/2) - 2*th_i + alpha ,th_i,alpha)
+    return gs1 +gs2 + gs3
 
 def g(thi,thr,sigma):
     gm_1 = gm(thr,sigma)
