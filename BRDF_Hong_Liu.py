@@ -27,6 +27,7 @@ def f(th_i,th_r,phi):
     return f
 
 DegToRad = lambda th : th * pi / 180
+#########_____________  Partie 2 : T-S BRDF model and Blinn’s G model
 #Supposition de notre part :
 #________________________________________
 phi = DegToRad(90)
@@ -57,5 +58,25 @@ plt.title("T-S fs curves with Blinn’s G")
 plt.xticks(np.arange(-pi/2,pi/2,pi/9),labels = np.arange(-90,90,20) )
 
 
+#########_____________  Partie 3 : Geometrical attenuation model modification
+from scipy.integrate import quad
+
+def rho(a):
+    return exp( ( -( (tan(a)) **2) ) / (2*(sigma**2)) ) / (2*pi*(sigma**2) * (cos(a)**3))
+
+#  C = ? ____________________________________ page 4/13 équation (2)
+
+I = quad(rho, 0, 1)
+print(I[0]-I[1])
 
 
+def gm(thr,sigma):
+    return
+def gs(thr,sigma):
+    
+    return
+
+def g(thi,thr,sigma):
+    gm_1 = gm(thr,sigma)
+    gs_1 = gs(thi,sigma)
+    return np.minimum(gm_1,gs_1)
