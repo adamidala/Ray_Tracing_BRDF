@@ -64,10 +64,10 @@ from scipy.integrate import quad
 def rho(a):
     return exp( ( -( (tan(a)) **2) ) / (2*(sigma**2)) ) / (2*pi*(sigma**2) * (cos(a)**3))
 
-#  C = ? ____________________________________ page 4/13 équation (2)
 
-I = quad(rho, 0, 1)
-print(I[0]-I[1])
+I = quad(rho, -pi/2, pi/2)
+C = 1/(I[0]-I[1])
+#  Ok pour C ? ____________________________________ page 4/13 équation (2)
 
 
 def gm(thr,sigma):
