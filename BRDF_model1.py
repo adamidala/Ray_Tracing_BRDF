@@ -89,6 +89,7 @@ Fnew = f(th_i,th_r1d,phi1d) *cos(th_r)
  #f00 = F[0,0] # *cos(th_r1d)
 
 # CONTOUR PLOT
+
 '''
 fig, ax = plt.subplots()
 CS = ax.contour(th_r, phi, Fnew)
