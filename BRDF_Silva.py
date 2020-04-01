@@ -10,15 +10,16 @@ rhol = 0.74                         # +/- 0.07
 gamma = 0.049                       # +/- 0.015
 K = 1.7                             # +/- 0.2 
 
-RAP = n/n0
 # Supposition de notre part
 #___________________________________________
 a = 1
 n0 = 1
 th = pi/2
-G = lambda th : 2/  ( 1 + sqrt( 1 + (gamma**2) * (tan(th)**2) ) )  # Page 6 (10)
 #___________________________________________
 
+H = lambda x : 1*(x>0)
+Gprim = lambda th : 2/  ( 1 + sqrt( 1 + (gamma**2) * (tan(th)**2) ) )  # Page 6 (10)
+G = lambda thi,thr,phir : H(thi-(pi/2))*H(thr-(pi/2))*Gprim(thi)*Gprim(thr)
 
 C = lambda thi,thr : exp( -K/2*(cos(thi)+cos(thr))  ) # Page 5 (7)
 
